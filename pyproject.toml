@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "sanaap-backend-challenge-api"
+version = "0.1.0"
+description = ""
+authors = ["fateme <fateme.soleimani.d@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^5.2"
+djangorestframework-simplejwt = "5.5.1"
+drf-spectacular = "^0.29.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
