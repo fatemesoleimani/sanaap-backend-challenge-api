@@ -36,8 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'storages',
     'drf_spectacular',
+
     'apps.user',
+    'apps.dms_admin',
+    'apps.document',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +139,21 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
     ],
 }
+
+# MinIO / S3 settings
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'minio_access_key'
+AWS_SECRET_ACCESS_KEY = 'minio_secret_key'
+AWS_STORAGE_BUCKET_NAME = 'documents'
+AWS_S3_ENDPOINT_URL = 'http://127.0.0.1:9000'
+
+AWS_S3_REGION_NAME = "us-east-1"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+AWS_QUERYSTRING_AUTH = False  # returns public URL without signature
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
