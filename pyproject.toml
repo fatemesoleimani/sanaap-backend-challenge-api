@@ -13,6 +13,8 @@ drf-spectacular = "^0.29.0"
 django-filter = "^25.2"
 boto3 = "^1.42.4"
 django-storages = "^1.14.6"
+python-decouple = "3.8"
+psycopg2-binary = "2.9.10"
 
 
 [build-system]
