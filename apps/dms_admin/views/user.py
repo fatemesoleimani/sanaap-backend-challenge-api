@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 
@@ -12,8 +13,9 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserCreateSerializer
     permission_classes = [IsAuthenticated & IsAdmin]
     pagination_class = DefaultPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['username', 'role']
+    filterset_fields = ['role']
 
     def get_serializer_class(self):
         if self.action == "create":
