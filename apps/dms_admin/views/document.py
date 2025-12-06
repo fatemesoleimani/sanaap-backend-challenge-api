@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import extend_schema, OpenApiRequest
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets, filters
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
@@ -9,7 +9,6 @@ from apps.document.models import Document
 from core.pagination_handler import DefaultPagination
 from core.permission import IsAdmin
 
-from drf_spectacular.utils import extend_schema, OpenApiTypes
 
 class DocumentAdminViewSet(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser, FormParser]

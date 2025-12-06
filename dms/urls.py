@@ -27,7 +27,7 @@ urlpatterns = [
 
     path("api/v1/user/", include("apps.user.urls")),
     path("api/v1/admin/", include("apps.dms_admin.urls")),
-    # path("api/v1/document/", include("apps.document.urls")),
+    path("api/v1/document/", include("apps.document.urls")),
 
 ]
 
