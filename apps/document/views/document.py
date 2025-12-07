@@ -78,8 +78,6 @@ class DocumentViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         return [perm() for perm in permission_classes]
 
-
-
     def perform_create(self, serializer):
         """
         Always assign the authenticated user as owner.
