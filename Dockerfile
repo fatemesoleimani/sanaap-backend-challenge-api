@@ -1,26 +1,18 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system deps
-RUN apt-get update && apt-get install -y \
-    curl build-essential && \
-    apt-get clean
+# Copy dependency file
+COPY requirements.txt /app/
 
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
-ENV PATH="/root/.local/bin:$PATH"
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy dependency files first (better caching)
-COPY pyproject.toml poetry.lock* /app/
-
-# Install dependencies inside container (no venv)
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
-
-# Copy application code
+# Copy application source code
 COPY . /app
 
+# Expose port
 EXPOSE 8000
 
+# Default command
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
