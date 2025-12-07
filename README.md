@@ -27,8 +27,22 @@ Supports **file uploads**, **filters**, **search**, **ordering**, and **paginati
 
 ## Installation
 
-Clone the repository and navigate into it:
+1. Clone the repository and navigate into it:
 
 ```bash
 git clone https://github.com/fatemesoleimani/sanaap-backend-challenge-api.git
 ```
+2. Configure Environment Variables
+
+Create and complete your .env file inside the project root.
+This file should include all required environment variables (database credentials, secret keys, etc.).
+
+3. Run the Application with Docker
+
+To build and start all services using Docker, run:
+
+```bash
+docker-compose up --build
+```
+
+Docker will install dependencies, build the containers, and start the application automatically.
