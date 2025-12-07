@@ -162,3 +162,6 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
 }
+
+ADMIN_USERNAME = config("ADMIN_USERNAME")
+ADMIN_PASSWORD = config("ADMIN_PASSWORD")
