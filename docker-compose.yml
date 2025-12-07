@@ -34,8 +34,8 @@ services:
       MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY}
     command: server /data --console-address ":9001"
     ports:
-      - "9005:9000"
-      - "9006:9001"
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web console
     volumes:
       - minio_data:/data
     networks:
