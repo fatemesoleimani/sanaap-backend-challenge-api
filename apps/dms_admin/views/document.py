@@ -66,3 +66,9 @@ class DocumentAdminViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.file:
+            instance.file.delete(save=False)
+        return super().destroy(request, *args, **kwargs)
