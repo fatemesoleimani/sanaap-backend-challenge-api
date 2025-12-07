@@ -9,9 +9,11 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-from decouple import config
 
+from datetime import timedelta
 from pathlib import Path
+
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -146,19 +148,17 @@ REST_FRAMEWORK = {
 }
 
 # MinIO / S3 settings
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-AWS_ACCESS_KEY_ID = 'minio_access_key'
-AWS_SECRET_ACCESS_KEY = 'minio_secret_key'
-AWS_STORAGE_BUCKET_NAME = 'documents'
-AWS_S3_ENDPOINT_URL = 'http://127.0.0.1:9000'
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")
 
-AWS_S3_REGION_NAME = "us-east-1"
-AWS_S3_SIGNATURE_VERSION = "s3v4"
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+AWS_QUERYSTRING_AUTH = True
 
-AWS_QUERYSTRING_AUTH = False  # returns public URL without signature
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+}
