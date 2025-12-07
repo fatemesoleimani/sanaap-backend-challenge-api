@@ -5,7 +5,7 @@ from apps.document.models import Document
 
 class DocumentSerializer(serializers.ModelSerializer):
     file = serializers.FileField(required=False)
-    user = serializers.CharField(source="user__username", read_only=True)
+    user = serializers.CharField(source="user.username", read_only=True)
 
     class Meta:
         model = Document
