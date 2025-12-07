@@ -35,10 +35,7 @@ class TestUserViewSetUnit(SimpleTestCase):
         self.assertIn("OperandHolder", type(combined).__name__)
 
     def test_filter_backends_config(self):
-        self.assertEqual(
-            self.view.filter_backends,
-            [DjangoFilterBackend, filters.SearchFilter]
-        )
+        self.assertEqual(self.view.filter_backends, [DjangoFilterBackend, filters.SearchFilter])
 
     def test_search_fields(self):
         self.assertEqual(self.view.search_fields, ["username", "role"])
