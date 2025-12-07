@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets, filters
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
@@ -10,6 +10,47 @@ from core.pagination_handler import DefaultPagination
 from core.permission import IsAdmin
 
 
+@extend_schema_view(
+    create=extend_schema(
+        request={
+            'multipart/form-data': {
+                'type': 'object',
+                'properties': {
+                    'title': {'type': 'string'},
+                    'file': {'type': 'string', 'format': 'binary'},
+                },
+                'required': ['title', 'file'],  # required for creation
+            }
+        },
+        responses=DocumentSerializer
+    ),
+    update=extend_schema(
+        request={
+            'multipart/form-data': {
+                'type': 'object',
+                'properties': {
+                    'title': {'type': 'string'},
+                    'file': {'type': 'string', 'format': 'binary'},
+                },
+                'required': [],  # optional for update
+            }
+        },
+        responses=DocumentSerializer
+    ),
+    partial_update=extend_schema(
+        request={
+            'multipart/form-data': {
+                'type': 'object',
+                'properties': {
+                    'title': {'type': 'string'},
+                    'file': {'type': 'string', 'format': 'binary'},
+                },
+                'required': [],  # optional for patch
+            }
+        },
+        responses=DocumentSerializer
+    ),
+)
 class DocumentAdminViewSet(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser, FormParser]
     queryset = Document.objects.all()
@@ -22,27 +63,6 @@ class DocumentAdminViewSet(viewsets.ModelViewSet):
     search_fields = ['title']
     ordering_fields = ['id', 'title', 'created_at', 'updated_at']
     ordering = ['-created_at']
-
-    @extend_schema(
-        request={
-            'multipart/form-data': {
-                'type': 'object',
-                'properties': {
-                    'title': {
-                        'type': 'string'
-                    },
-                    'file': {
-                        'type': 'string',
-                        'format': 'binary'
-                    }
-                },
-                'required': ['title', 'file']
-            }
-        },
-        responses=DocumentSerializer
-    )
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
