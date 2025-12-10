@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'storages',
     'drf_spectacular',
+    'rest_framework',
 
     'apps.user',
     'apps.dms_admin',

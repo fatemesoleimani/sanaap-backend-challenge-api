@@ -1,11 +1,12 @@
 from rest_framework import serializers
 
 from apps.document.models.document import Document
+from common.validators import validate_image_file
 from dms.settings import AWS_S3_ENDPOINT_PUBLIC_URL
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    file = serializers.FileField(required=False)
+    file = serializers.FileField(required=False, validators=[validate_image_file])
     user = serializers.CharField(source="user.username", read_only=True)
 
     class Meta:
