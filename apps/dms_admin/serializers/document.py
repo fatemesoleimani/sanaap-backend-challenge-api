@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.document.models import Document
+from dms.settings import AWS_S3_ENDPOINT_PUBLIC_URL
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -23,3 +24,22 @@ class DocumentSerializer(serializers.ModelSerializer):
         if file and instance.file:
             instance.file.delete(save=False)
         return super().update(instance, validated_data)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        file_url = data.get("file")
+
+        if file_url:
+            from urllib.parse import urlparse, urlunparse
+            parsed = urlparse(file_url)
+            public_parsed = urlparse(AWS_S3_ENDPOINT_PUBLIC_URL)
+
+            replaced = parsed._replace(
+                scheme=public_parsed.scheme,
+                netloc=public_parsed.netloc,
+            )
+
+            data["file"] = urlunparse(replaced)
+
+        return data
